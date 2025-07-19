@@ -1,5 +1,6 @@
-login success
-<form method="POST" action="{{ url('/logout') }}">
-    @csrf
-    <button type="submit">ログアウト</button>
-</form>
+@extends('layouts.app')
+
+@section('content')
+    <p>ログイン成功</p>
+    <a href="/notes">My Notes</a> 
+@endsection

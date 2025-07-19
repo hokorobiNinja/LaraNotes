@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>ユーザー登録</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>ログイン</h1>
 
     @if ($errors->any())
@@ -28,5 +24,4 @@
 
         <button type="submit">ログイン</button>
     </form>
-</body>
-</html>
+@endsection
