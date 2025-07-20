@@ -10,13 +10,17 @@
         <div>
             <label>タイトル：</label>
             <input type="text" name="title" value="{{ old('title', $note->title) }}">
-            @error('title') <p>{{ $message }}</p> @enderror
+            @error('title')
+                <p style="color: red">{{ $message }}</p>
+            @enderror
         </div>
 
         <div>
             <label>本文：</label>
             <textarea name="body">{{ old('body', $note->body) }}</textarea>
-            @error('body') <p>{{ $message }}</p> @enderror
+            @error('body')
+                <p style="color: red">{{ $message }}</p>
+            @enderror
         </div>
 
         <button type="submit">更新</button>

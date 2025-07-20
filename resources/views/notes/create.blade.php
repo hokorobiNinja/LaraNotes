@@ -3,23 +3,19 @@
 @section('content')
     <h1>ノート作成</h1>
 
-    @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form method="POST" action="{{ route('notes.store') }}">
         @csrf
         <label>タイトル</label><br>
         <input type="text" name="title" value="{{ old('title') }}"><br><br>
+        @error('title')
+            <p style="color: red">{{ $message }}</p>
+        @enderror
 
         <label>本文</label><br>
         <textarea name="body" rows="5">{{ old('body') }}</textarea><br><br>
+        @error('body')
+            <p style="color: red">{{ $message }}</p>
+        @enderror
 
         <button type="submit">投稿</button>
     </form>
