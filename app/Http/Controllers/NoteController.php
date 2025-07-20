@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\NoteRequest;
 
 class NoteController extends Controller
 {
@@ -19,15 +20,15 @@ class NoteController extends Controller
         return view('notes.create');
     }
 
-    public function store(Request $request)
+    public function store(NoteRequest $request)
     {
         Note::create([
             'title' => $request->title,
-            'body'  => $request->body,
-            'user_id' => auth()->id,
+            'body' => $request->body,
+            'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('notes.index')->with('success', 'ノートを投稿しました！');
+        return redirect()->route('notes.index')->with('success', 'ノートを作成しました');
     }
 
     public function show(Note $note)
@@ -59,15 +60,13 @@ class NoteController extends Controller
         return view('notes.edit', ['note' => $note]);
     }
 
-    public function update(Request $request, Note $note)
+    public function update(NoteRequest $request, Note $note)
     {
         if ($note->user_id !== auth()->id()) {
             abort(403, 'このノートにアクセスする権限がありません');
         }
 
         $note->update($request->only('title', 'body'));
-
-        $note->update($validated);
 
         return redirect()->route('notes.index')->with('success', 'ノートを更新しました');
     }
