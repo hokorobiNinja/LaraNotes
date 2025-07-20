@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Http\Requests\NoteRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\NoteRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class NoteController extends Controller
 {
+
+    use AuthorizesRequests;
+
     public function index()
     {
-        $notes = Auth::user()->notes()->latest()->get();
+        //$notes = Auth::user()->notes()->latest()->get();
+        
+        $notes = Note::with('user')->latest()->get();
         return view('notes.index', compact('notes'));
     }
 
@@ -33,18 +39,12 @@ class NoteController extends Controller
 
     public function show(Note $note)
     {
-        if ($note->user_id !== auth()->id()) {
-            abort(403, 'このノートにアクセスする権限がありません');
-        }
-
         return view('notes.show', compact('note'));
     }
 
     public function destroy(Note $note)
     {
-        if ($note->user_id !== auth()->id()) {
-            abort(403, 'このノートにアクセスする権限がありません');
-        }
+        $this->authorize('delete', $note);
 
         $note->delete();
 
@@ -53,18 +53,14 @@ class NoteController extends Controller
 
     public function edit(Note $note)
     {
-        if ($note->user_id !== auth()->id()) {
-            abort(403, 'このノートにアクセスする権限がありません');
-        }
+        $this->authorize('update', $note);
 
         return view('notes.edit', ['note' => $note]);
     }
 
     public function update(NoteRequest $request, Note $note)
     {
-        if ($note->user_id !== auth()->id()) {
-            abort(403, 'このノートにアクセスする権限がありません');
-        }
+        $this->authorize('update', $note);
 
         $note->update($request->only('title', 'body'));
 
