@@ -15,6 +15,7 @@
                 <h3>{{ $note->title }}</h3>
                 <p style="font-size: 80%">投稿者: {{ $note->user->name }}</p>
                 <p>{{ $note->body }}</p>
+                <p style="color: gray;">カテゴリ: {{ $note->category->name }}</p>
 
                 <a href="{{ route('notes.edit', $note) }}">編集</a>
 

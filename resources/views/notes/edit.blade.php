@@ -23,6 +23,19 @@
             @enderror
         </div>
 
+        <select name="category_id" style="margin-bottom:8px">
+        <option value="">-- カテゴリを選択 --</option>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}"
+                    {{ old('category_id', $note->category_id ?? '') == $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+        @error('category_id')
+            <p style="color: red">{{ $message }}</p>
+        @enderror
+
         <button type="submit">更新</button>
     </form>
 

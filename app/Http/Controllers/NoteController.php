@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Models\Category;
 use App\Http\Requests\NoteRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,14 +16,16 @@ class NoteController extends Controller
 
     public function index()
     {
-        $notes = Note::with('user')->latest()->get();
+        $notes = Note::with(['user', 'category'])->latest()->get();
         
         return view('notes.index', compact('notes'));
     }
 
     public function create()
     {
-        return view('notes.create');
+        $categories = Category::all();
+
+        return view('notes.create', compact('categories'));
     }
 
     public function store(NoteRequest $request)
@@ -30,6 +33,7 @@ class NoteController extends Controller
         Note::create([
             'title' => $request->title,
             'body' => $request->body,
+            'category_id' => $request->category_id,
             'user_id' => auth()->id(),
         ]);
 
@@ -54,14 +58,16 @@ class NoteController extends Controller
     {
         $this->authorize('update', $note);
 
-        return view('notes.edit', ['note' => $note]);
+        $categories = Category::all();
+
+        return view('notes.edit', ['note' => $note, 'categories' => $categories]);
     }
 
     public function update(NoteRequest $request, Note $note)
     {
         $this->authorize('update', $note);
 
-        $note->update($request->only('title', 'body'));
+        $note->update($request->only('title', 'body', 'category_id'));
 
         return redirect()->route('notes.index')->with('success', 'ノートを更新しました');
     }
