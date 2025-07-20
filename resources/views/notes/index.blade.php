@@ -13,6 +13,7 @@
         @forelse($notes as $note)
             <div style="border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem;">
                 <h3>{{ $note->title }}</h3>
+                <p style="font-size: 80%">投稿者: {{ $note->user->name }}</p>
                 <p>{{ $note->body }}</p>
 
                 <a href="{{ route('notes.edit', $note) }}">編集</a>
