@@ -21,12 +21,11 @@ class NoteController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'body'  => 'required|string',
+        Note::create([
+            'title' => $request->title,
+            'body'  => $request->body,
+            'user_id' => auth()->id,
         ]);
-
-        Auth::user()->notes()->create($request->only('title', 'body'));
 
         return redirect()->route('notes.index')->with('success', 'ノートを投稿しました！');
     }
@@ -66,10 +65,7 @@ class NoteController extends Controller
             abort(403, 'このノートにアクセスする権限がありません');
         }
 
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'body' => 'required|string',
-        ]);
+        $note->update($request->only('title', 'body'));
 
         $note->update($validated);
 
