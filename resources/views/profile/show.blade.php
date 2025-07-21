@@ -14,6 +14,6 @@
         （デフォルトのプロフィール画像の表示）
     @endif
 
-    <a href="{{ route('profile.edit', $user) }}">編集</a>
+    <a href="{{ route('profile.edit') }}">編集</a>
     <a href="{{ route('notes.index') }}">記事の一覧に戻る</a>
 @endsection
