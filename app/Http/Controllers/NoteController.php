@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+use Parsedown;
+
 class NoteController extends Controller
 {
 
@@ -20,7 +22,13 @@ class NoteController extends Controller
             ->withCount('likes')
             ->latest()
             ->get();
+    
+        $parsedown = new Parsedown();
         
+        $notes->each(function ($note) use ($parsedown) {
+            $note->body_html = $parsedown->text($note->body);
+        });
+
         return view('notes.index', compact('notes'));
     }
 
@@ -45,6 +53,9 @@ class NoteController extends Controller
 
     public function show(Note $note)
     {
+        $parsedown = new Parsedown();
+        $note->body_html = $parsedown->text($note->body);
+        
         return view('notes.show', compact('note'));
     }
 
