@@ -2,9 +2,11 @@
 
 @section('content')
     <h1>{{ $note->title }}</h1>
-    <p>{{ $note->body }}</p>
+    <div>
+        {!! $note->body_html !!}
+    </div>
     <p style="color: gray;">カテゴリ: {{ $note->category->name }}</p>
-    
+
     <h2>コメント一覧</h2>
     @foreach($note->comments as $comment)
         <div style="border-bottom:1px solid #ccc; margin-bottom:6px;">
