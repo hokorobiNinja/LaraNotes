@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommentController;
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/home', function() { return view('home'); })
@@ -42,6 +43,12 @@ Route::middleware(['auth'])->group(function() {
 
     Route::delete('/notes/{note}', [NoteController::class, 'destroy'])
         ->name('notes.destroy');
+
+    Route::post('/notes/{note}/comments', [CommentController::class, 'store'])
+        ->name('comments.store');
+
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
+        ->name('comments.destroy');
 });
 
 Route::middleware(['guest'])->group(function() {
