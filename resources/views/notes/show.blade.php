@@ -21,6 +21,20 @@
         </div>
     @endforeach
 
+    @auth
+        <form action="{{ route('like.store', $note) }}" method="POST" style="display:inline;">
+            @csrf
+            @if($note->likes->where('user_id', auth()->id())->count())
+                @method('DELETE')
+                <button type="submit" style="color: red;">♥ いいね解除</button>
+            @else
+                <button type="submit" style="color: blue;">♡ いいね</button>
+            @endif
+        </form>
+    @endauth
+
+    <span>いいね数: {{ $note->likes->count() }}</span>
+
     @if(auth()->check())
         <form action="{{ route('comments.store', $note) }}" method="POST" style="margin-top:12px;">
             @csrf

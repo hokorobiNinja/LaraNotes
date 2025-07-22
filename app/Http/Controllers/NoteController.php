@@ -16,7 +16,10 @@ class NoteController extends Controller
 
     public function index()
     {
-        $notes = Note::with(['user', 'category'])->latest()->get();
+        $notes = Note::with(['user', 'category'])
+            ->withCount('likes')
+            ->latest()
+            ->get();
         
         return view('notes.index', compact('notes'));
     }
