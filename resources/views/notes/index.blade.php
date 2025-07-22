@@ -16,6 +16,7 @@
                 <p style="font-size: 80%">投稿者: {{ $note->user->name }}</p>
                 <p>{{ $note->body }}</p>
                 <p style="color: gray;">カテゴリ: {{ $note->category->name }}</p>
+                <p>いいね数: {{ $note->likes_count }}</p>
 
                 <a href="{{ route('notes.edit', $note) }}">編集</a>
 
