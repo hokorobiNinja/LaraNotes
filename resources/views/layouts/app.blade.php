@@ -6,7 +6,7 @@
 </head>
 <body>
     @auth
-        <p>ログイン中：{{ Auth::user()->name }} | <a href="{{ route('logout') }}"
+        <p>ログイン中：<a href="{{ route('profile.show')}}">{{ Auth::user()->name }}</a> | <a href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a></p>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
