@@ -5,6 +5,7 @@
 
 <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" style="max-width:400px;">
     @csrf
+    @method('PUT')
 
     <div style="margin-bottom:10px;">
         <label>名前：</label><br>
