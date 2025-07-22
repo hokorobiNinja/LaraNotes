@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\ProfileController;
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/home', function() { return view('home'); })
@@ -12,6 +13,15 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/logout', [LoginController::class, 'destroy'])
         ->name('logout');
 
+    Route::get('/profile', [ProfileController::class, 'show'])
+        ->name('profile.show');
+
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::put('/profile/edit', [ProfileController::class, 'update'])
+        ->name('profile.update');
+    
     Route::get('/notes', [NoteController::class, 'index'])
         ->name('notes.index');
 
