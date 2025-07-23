@@ -7,7 +7,9 @@
         <div style="color: green;">{{ session('success') }}</div>
     @endif
 
-    <a href="{{ route('notes.create') }}">ノートを新規作成</a>
+    @auth
+        <a href="{{ route('notes.create') }}">ノートを新規作成</a>
+    @endauth
 
     <form action="{{ route('notes.index') }}" method="GET" style="margin-bottom: 16px;">
         <input type="text" name="keyword" value="{{ request('keyword') }}" placeholder="キーワードで検索" style="width: 200px;">
@@ -39,13 +41,15 @@
                 <p style="color: gray;">カテゴリ: {{ $note->category->name }}</p>
                 <p>いいね数: {{ $note->likes_count }}</p>
 
-                <a href="{{ route('notes.edit', $note) }}">編集</a>
+                @auth
+                    <a href="{{ route('notes.edit', $note) }}">編集</a>
 
-                <form action="{{ route('notes.destroy', $note) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
-                </form>
+                    <form action="{{ route('notes.destroy', $note) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+                    </form>
+                @endauth
             </div>
         @empty
             <li>該当する投稿がありません。</li>

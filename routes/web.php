@@ -8,6 +8,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 
+Route::get('/', [NoteController::class, 'index'])
+    ->name('notes.index');
+
+Route::get('/notes/{note}', [NoteController::class, 'show'])
+    ->name('notes.show');
+
 Route::middleware(['auth'])->group(function() {
     Route::get('/home', function() { return view('home'); })
         ->name('home');
@@ -23,18 +29,12 @@ Route::middleware(['auth'])->group(function() {
 
     Route::put('/profile/edit', [ProfileController::class, 'update'])
         ->name('profile.update');
-    
-    Route::get('/notes', [NoteController::class, 'index'])
-        ->name('notes.index');
 
     Route::get('/notes/create', [NoteController::class, 'create'])
         ->name('notes.create');
 
     Route::post('/notes', [NoteController::class, 'store'])
         ->name('notes.store');
-
-    Route::get('/notes/{note}', [NoteController::class, 'show'])
-        ->name('notes.show');
 
     Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])
         ->name('notes.edit');
