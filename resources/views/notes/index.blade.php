@@ -22,6 +22,12 @@
         <button type="submit" style="margin-left: 8px;">検索</button>
     </form>
 
+    @if(request()->filled('keyword') || request()->filled('category_id'))
+        <p style="color:gray;">
+            検索結果：{{ $notes->count() }}件
+        </p>
+    @endif
+
     <ul>
         @forelse($notes as $note)
             <div style="border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem;">
@@ -42,7 +48,7 @@
                 </form>
             </div>
         @empty
-            <li>ノートがありません。</li>
+            <li>該当する投稿がありません。</li>
         @endforelse
     </ul>
 @endsection
