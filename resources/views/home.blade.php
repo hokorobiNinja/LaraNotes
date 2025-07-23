@@ -2,5 +2,5 @@
 
 @section('content')
     <p>ログイン成功</p>
-    <a href="/notes">My Notes</a> 
+    <a href="{{ route('notes.index') }}">My Notes</a> 
 @endsection

@@ -8,7 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 
-Route::get('/notes', [NoteController::class, 'index'])
+Route::get('/', [NoteController::class, 'index'])
     ->name('notes.index');
 
 Route::middleware(['auth'])->group(function() {
