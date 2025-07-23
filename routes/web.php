@@ -11,6 +11,9 @@ use App\Http\Controllers\LikeController;
 Route::get('/', [NoteController::class, 'index'])
     ->name('notes.index');
 
+Route::get('/notes/{note}', [NoteController::class, 'show'])
+    ->name('notes.show');
+
 Route::middleware(['auth'])->group(function() {
     Route::get('/home', function() { return view('home'); })
         ->name('home');
@@ -32,9 +35,6 @@ Route::middleware(['auth'])->group(function() {
 
     Route::post('/notes', [NoteController::class, 'store'])
         ->name('notes.store');
-
-    Route::get('/notes/{note}', [NoteController::class, 'show'])
-        ->name('notes.show');
 
     Route::get('/notes/{note}/edit', [NoteController::class, 'edit'])
         ->name('notes.edit');
