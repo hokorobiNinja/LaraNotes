@@ -16,20 +16,31 @@ class NoteController extends Controller
 
     use AuthorizesRequests;
 
-    public function index()
+    public function index(Request $request)
     {
-        $notes = Note::with(['user', 'category'])
+        $query = Note::with(['user', 'category'])
             ->withCount('likes')
-            ->latest()
-            ->get();
-    
-        $parsedown = new Parsedown();
+            ->latest();
         
-        $notes->each(function ($note) use ($parsedown) {
-            $note->body_html = $parsedown->text($note->body);
-        });
+        if($keyword = $request->input('keyword')) {
+            $keywords = preg_split('/[\s　]+/u', $keyword, -1, PREG_SPLIT_NO_EMPTY);
 
-        return view('notes.index', compact('notes'));
+            $query->where(function($q) use ($keywords) {
+                foreach ($keywords as $word) {
+                    $q->orWhere('title', 'like', "%{$word}%")
+                    ->orWhere('body', 'like', "%{$word}%");
+                }
+            });
+        }
+        
+        if ($categoryId = $request->input('category_id')) {
+            $query->where('category_id', $categoryId);
+        }
+
+        $notes = $query->get();
+        $categories = Category::all();
+        
+        return view('notes.index', compact('notes', 'categories'));
     }
 
     public function create()
