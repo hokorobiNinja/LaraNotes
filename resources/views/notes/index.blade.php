@@ -25,7 +25,7 @@
     </form>
 
     @if(request()->filled('keyword') || request()->filled('category_id'))
-        <p style="color:gray;">
+        <p class="text-gray-500">
             検索結果：{{ $notes->count() }}件
         </p>
     @endif
