@@ -15,9 +15,6 @@ Route::get('/notes/{note}', [NoteController::class, 'show'])
     ->name('notes.show');
 
 Route::middleware(['auth'])->group(function() {
-    Route::get('/home', function() { return view('home'); })
-        ->name('home');
-
     Route::post('/logout', [LoginController::class, 'destroy'])
         ->name('logout');
 
