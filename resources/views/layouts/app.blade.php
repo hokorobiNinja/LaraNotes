@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>LaraNotes</title>
+    @vite('resources/css/app.css')
+    @livewireStyles
 </head>
 <body>
     @auth
@@ -32,5 +34,6 @@
     @endif
 
     @yield('content')
+    @livewireScripts
 </body>
 </html>
