@@ -12,6 +12,7 @@ Route::get('/', [NoteController::class, 'index'])
     ->name('notes.index');
 
 Route::get('/notes/{note}', [NoteController::class, 'show'])
+    ->where('note', '[0-9]+')
     ->name('notes.show');
 
 Route::middleware(['auth'])->group(function() {
